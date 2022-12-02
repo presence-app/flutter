@@ -597,7 +597,7 @@ class _ContrastReport {
       count += entry.value;
     }
     final double averageLightness = totalLightness / count;
-    assert(!averageLightness.isNaN);
+    assert(averageLightness != double.nan);
 
     MapEntry<Color, int>? lightColor;
     MapEntry<Color, int>? darkColor;

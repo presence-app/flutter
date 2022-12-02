@@ -87,7 +87,7 @@ void main() {
     final WindowsStdoutLogger logger = WindowsStdoutLogger(
       outputPreferences: OutputPreferences.test(),
       stdio: stdio,
-      terminal: Terminal.test(),
+      terminal: Terminal.test(supportsColor: false, supportsEmoji: false),
     );
 
     logger.printStatus('🔥🖼️✗✓🔨💪✏️');

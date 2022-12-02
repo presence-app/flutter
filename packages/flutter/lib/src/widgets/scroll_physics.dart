@@ -629,10 +629,7 @@ class BouncingScrollPhysics extends ScrollPhysics {
 
   @override
   BouncingScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    return BouncingScrollPhysics(
-      parent: buildParent(ancestor),
-      decelerationRate: decelerationRate
-    );
+    return BouncingScrollPhysics(parent: buildParent(ancestor));
   }
 
   /// The multiple applied to overscroll to make it appear that scrolling past

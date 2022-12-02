@@ -199,7 +199,7 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       )
       ..addOption('reporter',
         abbr: 'r',
-        help: 'Set how to print test results. If unset, value will default to either compact or expanded.',
+        help: 'Set how to print test results.',
         allowed: <String>['compact', 'expanded', 'github', 'json'],
         allowedHelp: <String, String>{
           'compact':  'A single line that updates dynamically (The default reporter).',
@@ -213,6 +213,7 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
               'in seconds (e.g. "60s"), '
               'as a multiplier of the default timeout (e.g. "2x"), '
               'or as the string "none" to disable the timeout entirely.',
+        defaultsTo: '30s',
       );
     addDdsOptions(verboseHelp: verboseHelp);
     usesFatalWarningsOption(verboseHelp: verboseHelp);
@@ -252,6 +253,18 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
 
   @override
   String get category => FlutterCommandCategory.project;
+
+  // Lookup the default reporter if one was not specified.
+  String _getReporter() {
+    final String? reporter = stringArgDeprecated('reporter');
+    if (reporter != null) {
+      return reporter;
+    }
+    if (globals.platform.environment['GITHUB_ACTIONS']?.toLowerCase() == 'true') {
+      return 'github';
+    }
+    return 'compact';
+  }
 
   @override
   Future<FlutterCommandResult> verifyThenRunCommand(String? commandPath) {
@@ -460,7 +473,7 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       flutterProject: flutterProject,
       web: stringArgDeprecated('platform') == 'chrome',
       randomSeed: stringArgDeprecated('test-randomize-ordering-seed'),
-      reporter: stringArgDeprecated('reporter'),
+      reporter: _getReporter(),
       timeout: stringArgDeprecated('timeout'),
       runSkipped: boolArgDeprecated('run-skipped'),
       shardIndex: shardIndex,

@@ -40,35 +40,35 @@ class TabBarTheme with Diagnosticable {
     this.mouseCursor,
   });
 
-  /// Overrides the default value for [TabBar.indicator].
+  /// Default value for [TabBar.indicator].
   final Decoration? indicator;
 
-  /// Overrides the default value for [TabBar.indicatorSize].
+  /// Default value for [TabBar.indicatorSize].
   final TabBarIndicatorSize? indicatorSize;
 
-  /// Overrides the default value for [TabBar.labelColor].
+  /// Default value for [TabBar.labelColor].
   final Color? labelColor;
 
-  /// Overrides the default value for [TabBar.labelPadding].
+  /// Default value for [TabBar.labelPadding].
   ///
   /// If there are few tabs with both icon and text and few
   /// tabs with only icon or text, this padding is vertically
   /// adjusted to provide uniform padding to all tabs.
   final EdgeInsetsGeometry? labelPadding;
 
-  /// Overrides the default value for [TabBar.labelStyle].
+  /// Default value for [TabBar.labelStyle].
   final TextStyle? labelStyle;
 
-  /// Overrides the default value for [TabBar.unselectedLabelColor].
+  /// Default value for [TabBar.unselectedLabelColor].
   final Color? unselectedLabelColor;
 
-  /// Overrides the default value for [TabBar.unselectedLabelStyle].
+  /// Default value for [TabBar.unselectedLabelStyle].
   final TextStyle? unselectedLabelStyle;
 
-  /// Overrides the default value for [TabBar.overlayColor].
+  /// Default value for [TabBar.overlayColor].
   final MaterialStateProperty<Color?>? overlayColor;
 
-  /// Overrides the default value for [TabBar.splashFactory].
+  /// Default value for [TabBar.splashFactory].
   final InteractiveInkFeatureFactory? splashFactory;
 
   /// {@macro flutter.material.tabs.mouseCursor}

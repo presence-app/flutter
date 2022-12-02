@@ -102,8 +102,8 @@ class _FlutterTestRunnerImpl implements FlutterTestRunner {
         '--pause-after-load',
       if (machine)
         ...<String>['-r', 'json']
-      else if (reporter != null)
-        ...<String>['-r', reporter],
+      else
+        ...<String>['-r', reporter ?? 'compact'],
       if (timeout != null)
         ...<String>['--timeout', timeout],
       '--concurrency=$concurrency',

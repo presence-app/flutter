@@ -116,6 +116,7 @@ class TestCompiler {
       buildMode: buildInfo.mode,
       trackWidgetCreation: buildInfo.trackWidgetCreation,
       initializeFromDill: testFilePath,
+      unsafePackageSerialization: false,
       dartDefines: buildInfo.dartDefines,
       packagesPath: buildInfo.packagesPath,
       extraFrontEndOptions: buildInfo.extraFrontEndOptions,

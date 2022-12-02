@@ -101,7 +101,7 @@ class Template {
   }) async {
     // All named templates are placed in the 'templates' directory
     final Directory templateDir = _templateDirectoryInPackage(name, fileSystem);
-    final Directory imageDir = await templateImageDirectory(name, fileSystem, logger);
+    final Directory imageDir = await _templateImageDirectory(name, fileSystem, logger);
     return Template._(
       <Directory>[templateDir],
       <Directory>[imageDir],
@@ -126,8 +126,8 @@ class Template {
       ],
       <Directory>[
         for (final String name in names)
-          if ((await templateImageDirectory(name, fileSystem, logger)).existsSync())
-            await templateImageDirectory(name, fileSystem, logger),
+          if ((await _templateImageDirectory(name, fileSystem, logger)).existsSync())
+            await _templateImageDirectory(name, fileSystem, logger),
       ],
       fileSystem: fileSystem,
       logger: logger,
@@ -350,10 +350,9 @@ Directory _templateDirectoryInPackage(String name, FileSystem fileSystem) {
   return fileSystem.directory(fileSystem.path.join(templatesDir, name));
 }
 
-/// Returns the directory containing the 'name' template directory in
-/// flutter_template_images, to resolve image placeholder against.
-/// if 'name' is null, return the parent template directory.
-Future<Directory> templateImageDirectory(String? name, FileSystem fileSystem, Logger logger) async {
+// Returns the directory containing the 'name' template directory in
+// flutter_template_images, to resolve image placeholder against.
+Future<Directory> _templateImageDirectory(String name, FileSystem fileSystem, Logger logger) async {
   final String toolPackagePath = fileSystem.path.join(
       Cache.flutterRoot!, 'packages', 'flutter_tools');
   final String packageFilePath = fileSystem.path.join(toolPackagePath, '.dart_tool', 'package_config.json');
@@ -362,10 +361,10 @@ Future<Directory> templateImageDirectory(String? name, FileSystem fileSystem, Lo
     logger: logger,
   );
   final Uri? imagePackageLibDir = packageConfig['flutter_template_images']?.packageUriRoot;
-  final Directory templateDirectory = fileSystem.directory(imagePackageLibDir)
+  return fileSystem.directory(imagePackageLibDir)
       .parent
-      .childDirectory('templates');
-  return name == null ? templateDirectory : templateDirectory.childDirectory(name);
+      .childDirectory('templates')
+      .childDirectory(name);
 }
 
 String _escapeKotlinKeywords(String androidIdentifier) {

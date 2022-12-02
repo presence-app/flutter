@@ -100,19 +100,6 @@ class VMServiceFlutterDriver extends FlutterDriver {
       }
     }
 
-    // Refreshes the isolate state periodically until the isolate reports as
-    // being runnable.
-    Future<vms.Isolate> waitForIsolateToBeRunnable(vms.IsolateRef ref) async {
-      while (true) {
-        final vms.Isolate isolate = await client.getIsolate(ref.id!);
-        if (isolate.pauseEvent!.kind == vms.EventKind.kNone) {
-          await Future<void>.delayed(_kPauseBetweenIsolateRefresh);
-        } else {
-          return isolate;
-        }
-      }
-    }
-
     final vms.IsolateRef isolateRef = (await _warnIfSlow<vms.IsolateRef?>(
       future: waitForRootIsolate(),
       timeout: kUnusuallyLongTimeout,
@@ -121,13 +108,11 @@ class VMServiceFlutterDriver extends FlutterDriver {
         : 'Isolate $isolateNumber is taking an unusually long time to start.',
     ))!;
     _log('Isolate found with number: ${isolateRef.number}');
-    final vms.Isolate isolate = await _warnIfSlow<vms.Isolate>(
-      future: waitForIsolateToBeRunnable(isolateRef),
-      timeout: kUnusuallyLongTimeout,
-      message: 'The isolate ${isolateRef.number} is taking unusually long time '
-          'to initialize. It still reports ${vms.EventKind.kNone} as pause '
-          'event which is incorrect.',
-    );
+    vms.Isolate isolate = await client.getIsolate(isolateRef.id!);
+
+    if (isolate.pauseEvent!.kind == vms.EventKind.kNone) {
+      isolate = await client.getIsolate(isolateRef.id!);
+    }
 
     final VMServiceFlutterDriver driver = VMServiceFlutterDriver.connectedTo(
       client,
@@ -216,8 +201,7 @@ class VMServiceFlutterDriver extends FlutterDriver {
     } else if (isolate.pauseEvent!.kind == vms.EventKind.kPauseExit ||
         isolate.pauseEvent!.kind == vms.EventKind.kPauseBreakpoint ||
         isolate.pauseEvent!.kind == vms.EventKind.kPauseException ||
-        isolate.pauseEvent!.kind == vms.EventKind.kPauseInterrupted ||
-        isolate.pauseEvent!.kind == vms.EventKind.kPausePostRequest) {
+        isolate.pauseEvent!.kind == vms.EventKind.kPauseInterrupted) {
       // If the isolate is paused for any other reason, assume the extension is
       // already there.
       _log('Isolate is paused mid-flight.');
@@ -598,9 +582,6 @@ Future<vms.VmService> _waitAndConnect(String url, Map<String, dynamic>? headers)
 /// The amount of time we wait prior to making the next attempt to connect to
 /// the VM service.
 const Duration _kPauseBetweenReconnectAttempts = Duration(seconds: 1);
-
-/// The amount of time we wait prior to refreshing the isolate state.
-const Duration _kPauseBetweenIsolateRefresh = Duration(milliseconds: 100);
 
 // See `timeline_streams` in
 // https://github.com/dart-lang/sdk/blob/main/runtime/vm/timeline.cc

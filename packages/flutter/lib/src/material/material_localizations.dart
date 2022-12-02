@@ -14,8 +14,64 @@ import 'typography.dart';
 
 // ADDING A NEW STRING
 //
-// Please refer to instructions in this markdown file
-// (packages/flutter_localizations/README.md)
+// If you (someone contributing to the Flutter framework) want to add a new
+// string to the MaterialLocalizations object (e.g. because you've added a new
+// widget and it has a tooltip), follow these steps:
+//
+// 1. Add the new getter to MaterialLocalizations below.
+//
+// 2. Implement a default value in DefaultMaterialLocalizations below.
+//
+// 3. Add a test to test/material/localizations_test.dart that verifies that
+//    this new value is implemented.
+//
+// 4. Update the flutter_localizations package. To add a new string to the
+//    flutter_localizations package, you must first add it to the English
+//    translations (lib/src/l10n/material_en.arb), including a description.
+//
+//    Then you need to add new entries for the string to all of the other
+//    language locale files by running:
+//
+//        dart dev/tools/localization/bin/gen_missing_localizations.dart
+//
+//    Which will copy the english strings into the other locales as placeholders
+//    until they can be translated.
+//
+//    Finally you need to re-generate lib/src/l10n/localizations.dart by running:
+//
+//        dart dev/tools/localization/bin/gen_localizations.dart --overwrite
+//
+//    There is a README file with further information in the lib/src/l10n/
+//    directory.
+//
+// 5. If you are a Google employee, you should then also follow the instructions
+//    at go/flutter-l10n. If you're not, don't worry about it.
+//
+// UPDATING AN EXISTING STRING
+//
+// If you (someone contributing to the Flutter framework) want to modify an
+// existing string in the MaterialLocalizations objects, follow these steps:
+//
+// 1. Modify the default value of the relevant getter(s) in
+//    DefaultMaterialLocalizations below.
+//
+// 2. Update the flutter_localizations package. Modify the out-of-date English
+//    strings in lib/src/l10n/material_en.arb.
+//
+//    You also need to re-generate lib/src/l10n/localizations.dart by running:
+//
+//        dart dev/tools/localization/bin/gen_localizations.dart --overwrite
+//
+//    This script may result in your updated getters being created in newer
+//    locales and set to the old value of the strings. This is to be expected.
+//    Leave them as they were generated, and they will be picked up for
+//    translation.
+//
+//    There is a README file with further information in the lib/src/l10n/
+//    directory.
+//
+// 3. If you are a Google employee, you should then also follow the instructions
+//    at go/flutter-l10n. If you're not, don't worry about it.
 
 /// Defines the localized resource values used by the Material widgets.
 ///
@@ -869,13 +925,13 @@ class DefaultMaterialLocalizations implements MaterialLocalizations {
   String get dateOutOfRangeLabel => 'Out of range.';
 
   @override
-  String get saveButtonLabel => 'Save';
+  String get saveButtonLabel => 'SAVE';
 
   @override
-  String get datePickerHelpText => 'Select date';
+  String get datePickerHelpText => 'SELECT DATE';
 
   @override
-  String get dateRangePickerHelpText => 'Select range';
+  String get dateRangePickerHelpText => 'SELECT RANGE';
 
   @override
   String get calendarModeButtonLabel => 'Switch to calendar';
@@ -884,10 +940,10 @@ class DefaultMaterialLocalizations implements MaterialLocalizations {
   String get inputDateModeButtonLabel => 'Switch to input';
 
   @override
-  String get timePickerDialHelpText => 'Select time';
+  String get timePickerDialHelpText => 'SELECT TIME';
 
   @override
-  String get timePickerInputHelpText => 'Enter time';
+  String get timePickerInputHelpText => 'ENTER TIME';
 
   @override
   String get timePickerHourLabel => 'Hour';
@@ -1064,13 +1120,13 @@ class DefaultMaterialLocalizations implements MaterialLocalizations {
   }
 
   @override
-  String get cancelButtonLabel => 'Cancel';
+  String get cancelButtonLabel => 'CANCEL';
 
   @override
-  String get closeButtonLabel => 'Close';
+  String get closeButtonLabel => 'CLOSE';
 
   @override
-  String get continueButtonLabel => 'Continue';
+  String get continueButtonLabel => 'CONTINUE';
 
   @override
   String get copyButtonLabel => 'Copy';
@@ -1088,7 +1144,7 @@ class DefaultMaterialLocalizations implements MaterialLocalizations {
   String get selectAllButtonLabel => 'Select all';
 
   @override
-  String get viewLicensesButtonLabel => 'View licenses';
+  String get viewLicensesButtonLabel => 'VIEW LICENSES';
 
   @override
   String get anteMeridiemAbbreviation => 'AM';

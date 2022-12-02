@@ -5,7 +5,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import 'basic.dart';
@@ -880,9 +879,9 @@ class _PlatformViewLinkState extends State<PlatformViewLink> {
     if (!_platformViewCreated) {
       // Depending on the implementation, the first non-empty size can be used
       // to size the platform view.
-      return _PlatformViewPlaceHolder(onLayout: (Size size, Offset position) {
+      return _PlatformViewPlaceHolder(onLayout: (Size size) {
         if (controller.awaitingCreation && !size.isEmpty) {
-          controller.create(size: size, position: position);
+          controller.create(size: size);
         }
       });
     }
@@ -1189,7 +1188,7 @@ class _PlatformLayerBasedAndroidViewSurface extends PlatformViewSurface {
 
 /// A callback used to notify the size of the platform view placeholder.
 /// This size is the initial size of the platform view.
-typedef _OnLayoutCallback = void Function(Size size, Offset position);
+typedef _OnLayoutCallback = void Function(Size size);
 
 /// A [RenderBox] that notifies its size to the owner after a layout.
 class _PlatformViewPlaceholderBox extends RenderConstrainedBox {
@@ -1205,10 +1204,7 @@ class _PlatformViewPlaceholderBox extends RenderConstrainedBox {
   @override
   void performLayout() {
     super.performLayout();
-    // A call to `localToGlobal` requires waiting for a frame to render first.
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      onLayout(size, localToGlobal(Offset.zero));
-    });
+    onLayout(size);
   }
 }
 

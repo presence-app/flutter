@@ -409,7 +409,6 @@ class _ModalBottomSheetState<T> extends State<_ModalBottomSheet<T>> {
   Widget build(BuildContext context) {
     assert(debugCheckHasMediaQuery(context));
     assert(debugCheckHasMaterialLocalizations(context));
-    final MediaQueryData mediaQuery = MediaQuery.of(context);
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
     final String routeLabel = _getRouteLabel(localizations);
 
@@ -436,7 +435,7 @@ class _ModalBottomSheetState<T> extends State<_ModalBottomSheet<T>> {
         // Disable the initial animation when accessible navigation is on so
         // that the semantics are added to the tree at the correct time.
         final double animationValue = animationCurve.transform(
-            mediaQuery.accessibleNavigation ? 1.0 : widget.route.animation!.value,
+            MediaQuery.accessibleNavigationOf(context) ? 1.0 : widget.route.animation!.value,
         );
         return Semantics(
           scopesRoute: true,
@@ -938,9 +937,9 @@ PersistentBottomSheetController<T> showBottomSheet<T>({
 // Design token database by the script:
 //   dev/tools/gen_defaults/bin/gen_defaults.dart.
 
-// Token database version: v0_141
+// Token database version: v0_137
 
-// Generated version v0_141
+// Generated version v0_137
 class _BottomSheetDefaultsM3 extends BottomSheetThemeData {
    const _BottomSheetDefaultsM3(this.context)
     : super(

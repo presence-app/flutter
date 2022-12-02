@@ -42,40 +42,40 @@ class CardTheme with Diagnosticable {
     this.shape,
   }) : assert(elevation == null || elevation >= 0.0);
 
-  /// Overrides the default value for [Card.clipBehavior].
+  /// Default value for [Card.clipBehavior].
   ///
   /// If null, [Card] uses [Clip.none].
   final Clip? clipBehavior;
 
-  /// Overrides the default value for [Card.color].
+  /// Default value for [Card.color].
   ///
   /// If null, [Card] uses [ThemeData.cardColor].
   final Color? color;
 
-  /// Overrides the default value for [Card.shadowColor].
+  /// Default value for [Card.shadowColor].
   ///
   /// If null, [Card] defaults to fully opaque black.
   final Color? shadowColor;
 
-  /// Overrides the default value for [Card.surfaceTintColor].
+  /// Default value for [Card.surfaceTintColor].
   ///
   /// If null, [Card] will not display an overlay color.
   ///
   /// See [Material.surfaceTintColor] for more details.
   final Color? surfaceTintColor;
 
-  /// Overrides the default value for [Card.elevation].
+  /// Default value for [Card.elevation].
   ///
   /// If null, [Card] uses a default of 1.0.
   final double? elevation;
 
-  /// Overrides the default value for [Card.margin].
+  /// Default value for [Card.margin].
   ///
   /// If null, [Card] uses a default margin of 4.0 logical pixels on all sides:
   /// `EdgeInsets.all(4.0)`.
   final EdgeInsetsGeometry? margin;
 
-  /// Overrides the default value for [Card.shape].
+  /// Default value for [Card.shape].
   ///
   /// If null, [Card] then uses a [RoundedRectangleBorder] with a circular
   /// corner radius of 4.0.

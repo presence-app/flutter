@@ -18,7 +18,7 @@ typedef HttpRequestFactory = DomXMLHttpRequest Function();
 
 /// Default HTTP client.
 DomXMLHttpRequest _httpClient() {
-  return createDomXMLHttpRequest();
+  return DomXMLHttpRequest();
 }
 
 /// Creates an overridable factory function.

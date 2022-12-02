@@ -121,7 +121,6 @@ void main() {
       fileSystem,
       flutterSdk,
       <PubspecYaml>[flutterPubspec],
-      fileSystem.systemTempDirectory,
     );
 
     expect(result, exists);
